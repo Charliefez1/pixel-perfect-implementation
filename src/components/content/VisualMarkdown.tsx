@@ -491,13 +491,13 @@ function RenderBoldCards({ block }: { block: BoldCardBlock }) {
 
 function RenderStepFlow({ block }: { block: StepFlowBlock }) {
   return (
-    <div className="relative ml-4 border-l-2 border-primary/20 pl-6 space-y-6">
+    <div className="space-y-4">
       {block.steps.map((step, i) => (
-        <div key={i} className="relative">
-          <div className="absolute -left-[calc(1.5rem+1px)] top-0 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground shadow-sm">
+        <div key={i} className="flex items-start gap-4">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground shadow-sm">
             {i + 1}
           </div>
-          <div className="pt-1">
+          <div className="pt-0.5">
             <p className="text-sm font-semibold text-foreground">{step.label}</p>
             <p
               className="mt-1 text-sm leading-relaxed text-muted-foreground"
