@@ -112,23 +112,40 @@ export default function ResourcePage() {
       </Breadcrumb>
 
       {/* Header */}
-      <div className="mb-10 flex items-start gap-4">
-        <div
-          className="mt-1 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg"
-          style={{ backgroundColor: section.color ?? "var(--primary)" }}
-        >
-          <SectionIcon className="h-6 w-6 text-white" />
+      <div className="mb-10 flex items-start justify-between gap-4">
+        <div className="flex items-start gap-4">
+          <div
+            className="mt-1 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg"
+            style={{ backgroundColor: section.color ?? "var(--primary)" }}
+          >
+            <SectionIcon className="h-6 w-6 text-white" />
+          </div>
+
+          <div className="flex items-center gap-4">
+            <div
+              className="w-1 self-stretch rounded-full"
+              style={{ backgroundColor: section.color ?? "var(--primary)" }}
+            />
+            <h1 className="text-3xl font-bold tracking-tight lg:text-4xl">
+              {resource.title}
+            </h1>
+          </div>
         </div>
 
-        <div className="flex items-center gap-4">
-          <div
-            className="w-1 self-stretch rounded-full"
-            style={{ backgroundColor: section.color ?? "var(--primary)" }}
-          />
-          <h1 className="text-3xl font-bold tracking-tight lg:text-4xl">
-            {resource.title}
-          </h1>
-        </div>
+        <button
+          onClick={() =>
+            exportResourceAsPdf(
+              resource.title,
+              section.title,
+              resource.content,
+              section.color
+            )
+          }
+          className="mt-2 inline-flex shrink-0 items-center gap-2 rounded-lg border border-border/60 bg-card px-3.5 py-2 text-sm font-medium text-foreground shadow-sm transition-all hover:shadow-md hover:bg-accent active:scale-[0.97]"
+        >
+          <Download className="h-4 w-4" />
+          <span className="hidden sm:inline">Download PDF</span>
+        </button>
       </div>
 
       {/* Visual content */}
