@@ -14,7 +14,7 @@ import {
 
 const tierMeta: Record<string, { label: string; description: string }> = {
   t1: { label: "Tier 1 — Foundations", description: "Core awareness for all employees" },
-  t2: { label: "Tier 2 — Champions", description: "Deeper knowledge for neurodiversity champions" },
+  t2: { label: "Tier 2 — Advocates", description: "Deeper knowledge for neurodiversity advocates" },
   t3: { label: "Tier 3 — Managers", description: "Practical skills for people leaders" },
   t4: { label: "Tier 4 — Strategic Leaders", description: "Organisational strategy and measurement" },
 };
