@@ -200,11 +200,8 @@ export default function ResourcePage() {
         </div>
       </div>
 
-      {/* Markdown content */}
-      <article
-        className="prose prose-neutral mx-auto max-w-3xl dark:prose-invert prose-headings:font-semibold prose-headings:tracking-tight prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose-p:leading-relaxed prose-li:leading-relaxed prose-code:rounded prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:text-sm prose-code:before:content-none prose-code:after:content-none"
-        dangerouslySetInnerHTML={{ __html: renderedHtml }}
-      />
+      {/* Visual content */}
+      <VisualMarkdown content={resource.content} sectionColor={section.color} />
 
       {/* Previous / Next navigation */}
       <nav className="mx-auto mt-16 flex max-w-3xl items-center justify-between border-t pt-8">
