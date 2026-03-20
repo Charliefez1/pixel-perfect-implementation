@@ -138,12 +138,6 @@ export default function ResourcePage() {
   // Resolve the section icon component
   const SectionIcon = section.icon;
 
-  // Safety: content originates from our own static data files, not from
-  // user-supplied input. The processInline helper also escapes HTML entities
-  // (&, <, >) before inserting markdown formatting tags, which prevents
-  // injection even if content were to contain unexpected markup.
-  const renderedHtml = renderMarkdown(resource.content);
-
   return (
     <div className="p-6 md:p-8 max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Back link */}
