@@ -41,8 +41,11 @@ function HeroSection() {
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
           Neuroinclusion Resource Hub
         </h1>
+        <p className="mt-2 text-sm font-medium tracking-wide text-primary/70">
+          Be Seen. Be Valued. Be Supported. Be Empowered.
+        </p>
         <p className="mt-3 text-base md:text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto">
-          {totalResources} resources to build neuroinclusive workplaces
+          {totalResources} resources for neuroinclusive performance by design
         </p>
 
         {/* Search bar */}
