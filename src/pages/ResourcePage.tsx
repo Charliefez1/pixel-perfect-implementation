@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, ChevronRight, ChevronLeft, FileQuestion } from "lucide-react";
 import { getSectionById } from "@/data/sections";
+import VisualMarkdown from "@/components/content/VisualMarkdown";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,72 +10,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-
-// ---------------------------------------------------------------------------
-// Markdown helpers
-// ---------------------------------------------------------------------------
-
-function processInline(text: string): string {
-  return text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-    .replace(/\*(.+?)\*/g, "<em>$1</em>")
-    .replace(/`(.+?)`/g, "<code>$1</code>");
-}
-
-function renderMarkdown(content: string): string {
-  let skippedFirstH1 = false;
-  return content
-    .split("\n\n")
-    .map((block) => {
-      block = block.trim();
-      if (!block) return "";
-
-      // Headings — skip the first h1 since it duplicates the page title
-      if (block.startsWith("### "))
-        return `<h3>${processInline(block.slice(4))}</h3>`;
-      if (block.startsWith("## "))
-        return `<h2>${processInline(block.slice(3))}</h2>`;
-      if (block.startsWith("# ")) {
-        if (!skippedFirstH1) {
-          skippedFirstH1 = true;
-          return "";
-        }
-        return `<h1>${processInline(block.slice(2))}</h1>`;
-      }
-
-      // Unordered list blocks
-      const lines = block.split("\n");
-      if (lines.every((l) => l.trim().startsWith("- ") || l.trim() === "")) {
-        const items = lines
-          .filter((l) => l.trim().startsWith("- "))
-          .map((l) => `<li>${processInline(l.trim().slice(2))}</li>`)
-          .join("");
-        return `<ul>${items}</ul>`;
-      }
-
-      // Ordered list blocks
-      if (
-        lines.every((l) => /^\d+\.\s/.test(l.trim()) || l.trim() === "")
-      ) {
-        const items = lines
-          .filter((l) => /^\d+\.\s/.test(l.trim()))
-          .map(
-            (l) =>
-              `<li>${processInline(l.trim().replace(/^\d+\.\s/, ""))}</li>`,
-          )
-          .join("");
-        return `<ol>${items}</ol>`;
-      }
-
-      // Default: paragraph (collapse internal newlines into spaces)
-      return `<p>${processInline(block.replace(/\n/g, " "))}</p>`;
-    })
-    .filter(Boolean)
-    .join("\n");
-}
 
 // ---------------------------------------------------------------------------
 // Not-found state
@@ -111,7 +46,6 @@ export default function ResourcePage() {
     resourceId: string;
   }>();
 
-  // ---- Data resolution ----
   const section = sectionId ? getSectionById(sectionId) : undefined;
 
   const resourceIndex =
@@ -130,12 +64,10 @@ export default function ResourcePage() {
       ? section.resources[resourceIndex + 1]
       : undefined;
 
-  // ---- 404 ----
   if (!section || !resource) {
     return <ResourceNotFound />;
   }
 
-  // Resolve the section icon component
   const SectionIcon = section.icon;
 
   return (
@@ -180,7 +112,6 @@ export default function ResourcePage() {
 
       {/* Header */}
       <div className="mb-10 flex items-start gap-4">
-        {/* Section icon badge */}
         <div
           className="mt-1 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg"
           style={{ backgroundColor: section.color ?? "var(--primary)" }}
@@ -188,7 +119,6 @@ export default function ResourcePage() {
           <SectionIcon className="h-6 w-6 text-white" />
         </div>
 
-        {/* Colored accent bar + title */}
         <div className="flex items-center gap-4">
           <div
             className="w-1 self-stretch rounded-full"
