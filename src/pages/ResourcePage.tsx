@@ -1,7 +1,8 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, ChevronRight, ChevronLeft, FileQuestion } from "lucide-react";
+import { ArrowLeft, ChevronRight, ChevronLeft, FileQuestion, Download } from "lucide-react";
 import { getSectionById } from "@/data/sections";
 import VisualMarkdown from "@/components/content/VisualMarkdown";
+import { exportResourceAsPdf } from "@/lib/export-pdf";
 import {
   Breadcrumb,
   BreadcrumbItem,
