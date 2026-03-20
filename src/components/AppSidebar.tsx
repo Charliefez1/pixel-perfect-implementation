@@ -45,7 +45,7 @@ export function AppSidebar() {
                 NDG Resource Hub
               </span>
               <span className="text-[11px] text-sidebar-foreground/60">
-                Neuroinclusion at Work
+                Neuroinclusive Performance
               </span>
             </div>
           )}
@@ -130,7 +130,7 @@ export function AppSidebar() {
       <SidebarFooter className="px-3 py-3">
         {!collapsed && (
           <p className="text-[10px] text-sidebar-foreground/40 leading-relaxed">
-            &copy; 2025 Neurodiversity Global
+            &copy; 2026 Neurodiversity Global
           </p>
         )}
       </SidebarFooter>
