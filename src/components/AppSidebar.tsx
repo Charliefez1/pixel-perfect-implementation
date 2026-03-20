@@ -96,7 +96,7 @@ export function AppSidebar() {
           if (catSections.length === 0) return null;
 
           return (
-            <SidebarGroup key={category} defaultOpen>
+            <SidebarGroup key={category}>
               <SidebarGroupLabel className="text-sidebar-foreground/50 text-[10px] uppercase tracking-widest">
                 {category}
               </SidebarGroupLabel>
