@@ -37,6 +37,10 @@ function ResourceCard({
   color: string;
   animationDelay: number;
 }) {
+  // Extract a quick stat from the content (count of bullet points as "key points")
+  const bulletCount = (resource.content.match(/^- /gm) || []).length;
+  const headingCount = (resource.content.match(/^## /gm) || []).length;
+
   return (
     <div
       className="opacity-0 animate-fade-up"
@@ -54,30 +58,48 @@ function ResourceCard({
             className="absolute left-0 top-0 bottom-0 w-1 transition-all duration-300 group-hover:w-1.5"
             style={{ backgroundColor: color }}
           />
-          <CardContent className="flex items-center gap-4 p-4 pl-5">
-            {/* Resource number badge */}
-            <div
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-sm font-semibold transition-colors duration-300"
-              style={{
-                backgroundColor: color + "14",
-                color: color,
-              }}
-            >
-              {index + 1}
-            </div>
+          <CardContent className="p-4 pl-5">
+            <div className="flex items-start gap-4">
+              {/* Resource number badge */}
+              <div
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-sm font-semibold transition-colors duration-300"
+                style={{
+                  backgroundColor: color + "14",
+                  color: color,
+                }}
+              >
+                {index + 1}
+              </div>
 
-            {/* Text content */}
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-foreground group-hover:text-foreground/90 transition-colors truncate">
-                {resource.title}
-              </p>
-              <p className="mt-0.5 text-xs text-muted-foreground leading-relaxed line-clamp-2">
-                {resource.description}
-              </p>
-            </div>
+              {/* Text content */}
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-foreground group-hover:text-foreground/90 transition-colors">
+                  {resource.title}
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground leading-relaxed line-clamp-2">
+                  {resource.description}
+                </p>
 
-            {/* Chevron */}
-            <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground/40 transition-all duration-300 group-hover:text-muted-foreground group-hover:translate-x-0.5" />
+                {/* Content stats */}
+                <div className="mt-2.5 flex items-center gap-3">
+                  {headingCount > 0 && (
+                    <span className="inline-flex items-center gap-1 text-[11px] text-muted-foreground/70">
+                      <FileText className="h-3 w-3" />
+                      {headingCount} sections
+                    </span>
+                  )}
+                  {bulletCount > 0 && (
+                    <span className="inline-flex items-center gap-1 text-[11px] text-muted-foreground/70">
+                      <ChevronRight className="h-3 w-3" />
+                      {bulletCount} key points
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Chevron */}
+              <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground/40 transition-all duration-300 group-hover:text-muted-foreground group-hover:translate-x-0.5 mt-2" />
+            </div>
           </CardContent>
         </Card>
       </Link>

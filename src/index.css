@@ -130,6 +130,11 @@
   }
 }
 
+/* Inline code in visual markdown */
+.inline-code {
+  @apply rounded bg-muted px-1.5 py-0.5 text-sm font-mono;
+}
+
 /* Smooth scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
