@@ -91,6 +91,13 @@ function StatsRow() {
 }
 
 function StartHereCallout() {
+  const tiers = [
+    { label: "Aware", color: "bg-blue-100 text-blue-700" },
+    { label: "Advocate", color: "bg-emerald-100 text-emerald-700" },
+    { label: "People Leaders", color: "bg-amber-100 text-amber-700" },
+    { label: "Executive", color: "bg-violet-100 text-violet-700" },
+  ];
+
   return (
     <Link
       to="/section/learning-pathways"
@@ -105,8 +112,18 @@ function StartHereCallout() {
             New here? Start with the Learning Pathways
           </p>
           <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
-            Structured modules from foundations through to strategic leadership in neuroinclusion — the recommended starting point for all teams.
+            Structured modules across four tiers — the recommended starting point for all teams.
           </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {tiers.map((tier) => (
+              <span
+                key={tier.label}
+                className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${tier.color}`}
+              >
+                {tier.label}
+              </span>
+            ))}
+          </div>
         </div>
         <ArrowRight className="h-5 w-5 shrink-0 text-primary transition-transform group-hover:translate-x-1" />
       </div>

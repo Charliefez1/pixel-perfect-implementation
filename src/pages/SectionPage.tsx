@@ -13,10 +13,10 @@ import {
 } from "@/components/ui/breadcrumb";
 
 const tierMeta: Record<string, { label: string; description: string }> = {
-  t1: { label: "Tier 1 — Foundations", description: "Core awareness for all employees" },
-  t2: { label: "Tier 2 — Advocates", description: "Deeper knowledge for neurodiversity advocates" },
+  t1: { label: "Tier 1 — Aware", description: "Core awareness for all employees" },
+  t2: { label: "Tier 2 — Advocate", description: "Deeper knowledge for neurodiversity advocates" },
   t3: { label: "Tier 3 — People Leaders", description: "Practical skills for people leaders" },
-  t4: { label: "Tier 4 — Strategic Leaders", description: "Organisational strategy and measurement" },
+  t4: { label: "Tier 4 — Executive", description: "Organisational strategy and measurement" },
 };
 
 function getTier(resourceId: string): string | null {
