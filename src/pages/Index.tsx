@@ -1,25 +1,87 @@
-import { Link } from "react-router-dom";
-import { ArrowRight, BookOpen, Layers, FileText, GraduationCap } from "lucide-react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  ArrowRight,
+  BookOpen,
+  Layers,
+  FileText,
+  GraduationCap,
+  Search,
+  Sparkles,
+} from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { sections, totalResources, categories } from "@/data/sections";
 
+function HeroSection() {
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (query.trim()) {
+      navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+    }
+  };
+
+  return (
+    <div className="relative overflow-hidden rounded-2xl px-6 py-16 md:px-12 md:py-20">
+      {/* Gradient mesh background */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-violet-50" />
+        <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-blue-100/40 blur-3xl" />
+        <div className="absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-violet-100/30 blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-48 w-96 rounded-full bg-indigo-50/50 blur-3xl" />
+      </div>
+
+      <div className="mx-auto max-w-2xl text-center">
+        <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary mb-6">
+          <Sparkles className="h-3 w-3" />
+          Neurodiversity Global
+        </div>
+        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+          Neuroinclusion Resource Hub
+        </h1>
+        <p className="mt-3 text-base md:text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto">
+          {totalResources} resources to build neuroinclusive workplaces
+        </p>
+
+        {/* Search bar */}
+        <form onSubmit={handleSearch} className="mt-8 mx-auto max-w-md">
+          <div className="relative group">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground transition-colors group-focus-within:text-primary" />
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search resources..."
+              className="w-full rounded-full border border-border/60 bg-white/80 backdrop-blur-sm py-3 pl-11 pr-4 text-sm shadow-sm transition-all placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 function StatsRow() {
-  const contentTypes = new Set(sections.map((s) => s.category)).size;
+  const categoryCount = categories.length;
+  const stats = [
+    { label: "Resources", value: totalResources, icon: FileText, color: "text-blue-600", bg: "bg-blue-50" },
+    { label: "Sections", value: sections.length, icon: Layers, color: "text-violet-600", bg: "bg-violet-50" },
+    { label: "Categories", value: categoryCount, icon: BookOpen, color: "text-emerald-600", bg: "bg-emerald-50" },
+  ];
+
   return (
     <div className="grid grid-cols-3 gap-4">
-      {[
-        { label: "Resources", value: totalResources, icon: FileText },
-        { label: "Sections", value: sections.length, icon: Layers },
-        { label: "Categories", value: contentTypes, icon: BookOpen },
-      ].map((stat) => (
-        <Card key={stat.label} className="border-0 shadow-sm">
-          <CardContent className="flex items-center gap-3 p-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+      {stats.map((stat) => (
+        <Card key={stat.label} className="border-0 shadow-sm hover:shadow-md transition-shadow">
+          <CardContent className="flex items-center gap-3 p-5">
+            <div className={`flex h-11 w-11 items-center justify-center rounded-xl ${stat.bg} ${stat.color}`}>
               <stat.icon className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-2xl font-semibold tracking-tight">{stat.value}</p>
-              <p className="text-xs text-muted-foreground">{stat.label}</p>
+              <p className="text-2xl font-bold tracking-tight">{stat.value}</p>
+              <p className="text-xs text-muted-foreground font-medium">{stat.label}</p>
             </div>
           </CardContent>
         </Card>
@@ -31,51 +93,63 @@ function StatsRow() {
 function StartHereCallout() {
   return (
     <Link
-      to="/section/foundation-learning"
-      className="group block rounded-xl border-2 border-dashed border-primary/30 bg-primary/5 p-5 transition-colors hover:border-primary/50 hover:bg-primary/10"
+      to="/section/learning-pathways"
+      className="group relative block overflow-hidden rounded-xl border border-primary/20 bg-gradient-to-r from-primary/5 via-primary/[0.03] to-transparent p-6 transition-all hover:border-primary/40 hover:shadow-md"
     >
-      <div className="flex items-start gap-4">
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-          <GraduationCap className="h-5 w-5" />
+      <div className="flex items-center gap-5">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
+          <GraduationCap className="h-6 w-6" />
         </div>
         <div className="flex-1">
-          <p className="font-semibold text-foreground">
-            New here? Start with the Foundations
+          <p className="font-semibold text-foreground text-base">
+            New here? Start with the Learning Pathways
           </p>
           <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
-            Our Foundation Learning Pathway covers the core concepts of neurodiversity and
-            neuroinclusion — the recommended starting point for all teams.
+            Structured modules from foundations through to strategic leadership in neuroinclusion — the recommended starting point for all teams.
           </p>
         </div>
-        <ArrowRight className="mt-1 h-5 w-5 text-primary opacity-0 transition-opacity group-hover:opacity-100" />
+        <ArrowRight className="h-5 w-5 shrink-0 text-primary transition-transform group-hover:translate-x-1" />
       </div>
     </Link>
   );
 }
 
-function SectionCard({ section }: { section: (typeof sections)[0] }) {
+function SectionCard({
+  section,
+  delay,
+}: {
+  section: (typeof sections)[0];
+  delay: number;
+}) {
   const Icon = section.icon;
   return (
-    <Link to={`/section/${section.id}`} className="group block">
-      <Card className="h-full border shadow-sm transition-shadow hover:shadow-md active:scale-[0.98]">
+    <Link
+      to={`/section/${section.id}`}
+      className="group block opacity-0 animate-fade-up"
+      style={{ animationDelay: `${delay}ms`, animationFillMode: "forwards" }}
+    >
+      <Card className="h-full border border-border/60 shadow-sm transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.98]">
         <CardContent className="p-5">
-          <div className="flex items-start gap-3">
+          <div className="flex items-start gap-3.5">
             <div
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
-              style={{ backgroundColor: section.color + "18", color: section.color }}
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-transform group-hover:scale-110"
+              style={{ backgroundColor: section.color + "14", color: section.color }}
             >
-              <Icon className="h-4 w-4" />
+              <Icon className="h-5 w-5" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-medium text-sm text-foreground leading-snug">
+              <p className="font-semibold text-sm text-foreground leading-snug">
                 {section.title}
               </p>
               <p className="mt-1.5 text-xs text-muted-foreground line-clamp-2 leading-relaxed">
                 {section.description}
               </p>
-              <p className="mt-2 text-[11px] font-medium text-primary">
-                {section.resourceCount} resources
-              </p>
+              <div className="mt-3 flex items-center justify-between">
+                <p className="text-[11px] font-semibold text-primary">
+                  {section.resourceCount} resources
+                </p>
+                <ArrowRight className="h-3.5 w-3.5 text-muted-foreground/40 transition-all group-hover:text-primary group-hover:translate-x-0.5" />
+              </div>
             </div>
           </div>
         </CardContent>
@@ -85,61 +159,71 @@ function SectionCard({ section }: { section: (typeof sections)[0] }) {
 }
 
 export default function Index() {
+  let cardIndex = 0;
+
   return (
-    <div className="p-6 md:p-8 max-w-6xl mx-auto space-y-8">
-      {/* Welcome */}
-      <div
-        className="opacity-0 animate-fade-up"
-        style={{ animationDelay: "0ms", animationFillMode: "forwards" }}
-      >
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-          Neuroinclusion Resource Hub
-        </h1>
-        <p className="mt-1 text-sm text-muted-foreground max-w-xl leading-relaxed">
-          Browse {totalResources} resources across {sections.length} sections to build a
-          neuroinclusive workplace. Start with the foundations or jump to a specific toolkit.
-        </p>
-      </div>
+    <div className="min-h-screen">
+      <div className="mx-auto max-w-6xl px-6 pb-16 md:px-8">
+        {/* Hero */}
+        <div
+          className="opacity-0 animate-fade-up"
+          style={{ animationDelay: "0ms", animationFillMode: "forwards" }}
+        >
+          <HeroSection />
+        </div>
 
-      {/* Stats */}
-      <div
-        className="opacity-0 animate-fade-up"
-        style={{ animationDelay: "80ms", animationFillMode: "forwards" }}
-      >
-        <StatsRow />
-      </div>
-
-      {/* Start Here */}
-      <div
-        className="opacity-0 animate-fade-up"
-        style={{ animationDelay: "160ms", animationFillMode: "forwards" }}
-      >
-        <StartHereCallout />
-      </div>
-
-      {/* Sections by category */}
-      {categories.map((category, catIdx) => {
-        const catSections = sections.filter((s) => s.category === category);
-        return (
+        <div className="mt-8 space-y-10">
+          {/* Stats */}
           <div
-            key={category}
             className="opacity-0 animate-fade-up"
-            style={{
-              animationDelay: `${240 + catIdx * 80}ms`,
-              animationFillMode: "forwards",
-            }}
+            style={{ animationDelay: "80ms", animationFillMode: "forwards" }}
           >
-            <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-              {category}
-            </h2>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {catSections.map((section) => (
-                <SectionCard key={section.id} section={section} />
-              ))}
-            </div>
+            <StatsRow />
           </div>
-        );
-      })}
+
+          {/* Start Here */}
+          <div
+            className="opacity-0 animate-fade-up"
+            style={{ animationDelay: "160ms", animationFillMode: "forwards" }}
+          >
+            <StartHereCallout />
+          </div>
+
+          {/* Sections by category */}
+          {categories.map((category, catIdx) => {
+            const catSections = sections.filter((s) => s.category === category);
+            const baseDelay = 240 + catIdx * 60;
+
+            return (
+              <div
+                key={category}
+                className="opacity-0 animate-fade-up"
+                style={{
+                  animationDelay: `${baseDelay}ms`,
+                  animationFillMode: "forwards",
+                }}
+              >
+                <h2 className="text-[11px] font-semibold text-muted-foreground uppercase tracking-[0.15em] mb-4">
+                  {category}
+                </h2>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {catSections.map((section) => {
+                    const delay = baseDelay + 40 + cardIndex * 40;
+                    cardIndex++;
+                    return (
+                      <SectionCard
+                        key={section.id}
+                        section={section}
+                        delay={delay}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AppLayout } from "@/layouts/AppLayout";
 import Index from "./pages/Index";
 import SectionPage from "./pages/SectionPage";
+import ResourcePage from "./pages/ResourcePage";
 import SearchPage from "./pages/SearchPage";
 import NotFound from "./pages/NotFound";
 
@@ -31,6 +32,14 @@ const App = () => (
             element={
               <AppLayout>
                 <SectionPage />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/section/:sectionId/resource/:resourceId"
+            element={
+              <AppLayout>
+                <ResourcePage />
               </AppLayout>
             }
           />

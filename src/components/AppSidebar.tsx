@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Search, LayoutDashboard } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { Input } from "@/components/ui/input";
@@ -21,13 +21,13 @@ import { sections, categories } from "@/data/sections";
 export function AppSidebar() {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
-  const location = useLocation();
   const [filter, setFilter] = useState("");
 
   const filteredSections = filter
     ? sections.filter(
         (s) =>
           s.title.toLowerCase().includes(filter.toLowerCase()) ||
+          s.shortTitle.toLowerCase().includes(filter.toLowerCase()) ||
           s.category.toLowerCase().includes(filter.toLowerCase())
       )
     : sections;
@@ -36,7 +36,7 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader className="px-3 py-5">
         <Link to="/" className="flex items-center gap-3">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground text-sm font-bold">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-sidebar-primary to-blue-400 text-sidebar-primary-foreground text-sm font-bold shadow-sm">
             N
           </div>
           {!collapsed && (
@@ -58,7 +58,7 @@ export function AppSidebar() {
             <div className="relative">
               <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-sidebar-foreground/40" />
               <Input
-                placeholder="Filter sections…"
+                placeholder="Filter sections..."
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
                 className="h-8 bg-sidebar-accent border-sidebar-border text-sidebar-foreground placeholder:text-sidebar-foreground/40 pl-8 text-xs"
@@ -130,7 +130,7 @@ export function AppSidebar() {
       <SidebarFooter className="px-3 py-3">
         {!collapsed && (
           <p className="text-[10px] text-sidebar-foreground/40 leading-relaxed">
-            © 2024 Neurodiversity Global
+            &copy; 2025 Neurodiversity Global
           </p>
         )}
       </SidebarFooter>
